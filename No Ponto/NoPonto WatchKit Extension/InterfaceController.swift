@@ -128,25 +128,27 @@ class InterfaceController: WKInterfaceController {
 
     func setupPickers(){
         // Picker de quantidade
-        var weightItems: [WKPickerItem] = []
-        for number in stride(from: 0.1, through: 1.0, by: increment) {
-            let item = WKPickerItem()
-            item.title = "\(get2DecimalPlaces(for: number))"
-            weightItems.append(item)
+        var range = stride(from: 0.1, through: 1.0, by: increment)
+        setDataForPicker(weightPicker, within: range) { (item, index) in
+            item.title = "\(get2DecimalPlaces(for: index))"
         }
-        weightPicker.setItems(weightItems)
-        weightPicker.setSelectedItemIndex(0)
-        
+
         // Picker ponto da carne
-        var tempItems: [WKPickerItem] = []
-        for index in 1...4 {
-            let item = WKPickerItem()
-            item.contentImage = WKImage(imageName: "temp-\(index)")
-            tempItems.append(item)
+        range = stride(from: 1.0, through: 4.0, by: 1.0)
+        setDataForPicker(temperaturePicker, within: range) { (item, index) in
+            item.contentImage = WKImage(imageName: "temp-\(Int(index))")
         }
-        temperaturePicker.setItems(tempItems)
-        temperaturePicker.setSelectedItemIndex(0)
-        
+    }
+    
+    func setDataForPicker(_ picker: WKInterfacePicker, within range: StrideThrough<Double>, configureItem: (WKPickerItem, Double) -> Void){
+        var pickerItems: [WKPickerItem] = []
+        for index in range {
+            let item = WKPickerItem()
+            configureItem(item,index)
+            pickerItems.append(item)
+        }
+        picker.setItems(pickerItems)
+        picker.setSelectedItemIndex(0)
     }
     
     
