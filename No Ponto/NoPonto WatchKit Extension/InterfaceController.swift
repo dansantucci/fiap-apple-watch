@@ -109,7 +109,7 @@ class InterfaceController: WKInterfaceController {
         updateConfiguration()
         
         let weightPickerIndex = Int(round(kg/increment) - 1)
-    weightPicker.setSelectedItemIndex(weightPickerIndex)
+        weightPicker.setSelectedItemIndex(weightPickerIndex)
     }
     
     
